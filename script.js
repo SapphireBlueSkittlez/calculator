@@ -40,6 +40,7 @@ function operate(operator, a, b) {
 let displayValue = "";
 let num1 = 0;
 let operator = "";
+let hasDecimal = false;
 const formula = document.getElementById('formula');
 const display = document.getElementById('result');
 const buttons = document.querySelectorAll('button');
@@ -53,6 +54,16 @@ function btnClick (e) {
     if (!(isNaN(Number(e.target.textContent)))) {
         display.textContent += e.target.textContent;
     } 
+    //use decimal
+    else if(e.target.textContent == '.') {
+        if(!hasDecimal) {
+            if(display.textContent == '') {
+                display.textContent += '0';
+            }
+            display.textContent += e.target.textContent;
+            hasDecimal = true;
+        }
+    }
     //clear display
     else if (e.target.textContent == 'C'){
         displayValue = "";
@@ -60,12 +71,22 @@ function btnClick (e) {
         operator = "";
         display.textContent = "";
         formula.textContent = "";
+        hasDecimal = false;
+    } 
+    //backspace
+    else if (e.target.textContent == '<-'){
+        if(display.textContent.substring(display.textContent.length -1) == '.') {
+            hasDecimal = false;
+            console.log(display.textContent.substring(display.textContent.length -2));
+        }
+        display.textContent = display.textContent.slice(0, -1);
     } 
     //use = sign
     else if (e.target.textContent == '='){
         if(num1 == undefined || isNaN(num1)) {
             num1 = 0;
         }
+        hasDecimal = false;
         displayValue = display.textContent;
         displayValue = operate(operator, num1, Number(displayValue));
 
@@ -86,6 +107,7 @@ function btnClick (e) {
             displayValue = operate(operator, num1, Number(displayValue));
         }
         
+        hasDecimal = false;
         formula.textContent = displayValue;
         
         operator = e.target.textContent;
