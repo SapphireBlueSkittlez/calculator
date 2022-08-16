@@ -25,9 +25,20 @@
 
 p {
     background-color: white;
-    height: 45px;
-    font-size: 40px;
     margin: 0;
     padding: 5px;
     text-align: right;
+}
+
+#formula {
+    height: 20px;
+    font-size: 16px;
+    padding-bottom: 0;
+    color: #555555;
+}
+
+#result {
+    height: 45px;
+    font-size: 40px;
+    padding-top: 0;
 }

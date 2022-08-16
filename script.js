@@ -26,17 +26,64 @@ function operate(operator, a, b) {
             return multiply(a, b);
             break;
         case '/':
-            return divide(a, b);
+            if(b == 0) {
+                return 'snarky message';
+                break;
+            }
+            return (Math.round(divide(a, b) * 1000) / 1000);
+            break;
+        case '=':
             break;
     }
 }
 
-console.log(add(1, 2));
-console.log(subtract(1, 2));
-console.log(multiply(2, 2));
-console.log(divide(4, 2));
-console.log('++++++++');
-console.log(operate('+', 1, 2));
-console.log(operate('-', 1, 2));
-console.log(operate('*', 2, 2));
-console.log(operate('/', 4, 2));
+let displayValue = "";
+let num1 = 0;
+let operator = "";
+const formula = document.getElementById('formula');
+const display = document.getElementById('result');
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach((button) => {
+    button.addEventListener('click', btnClick);
+});
+
+function btnClick (e) {
+    if (!(isNaN(Number(e.target.textContent)))) {
+        display.textContent += e.target.textContent;
+    } else if (e.target.textContent == 'C'){
+        displayValue = "";
+        num1 = 0;
+        operator = "";
+        display.textContent = "";
+        formula.textContent = "";
+    } else if (e.target.textContent == '='){
+        if(num1 == undefined || isNaN(num1)) {
+            num1 = 0;
+        }
+        displayValue = display.textContent;
+        displayValue = operate(operator, num1, Number(displayValue));
+
+        formula.textContent = displayValue;
+        operator = "";
+        display.textContent = "";
+        num1 = Number(displayValue);
+    } else {
+        if(num1 == undefined || isNaN(num1)) {
+            num1 = 0;
+        }
+        if(display.textContent != "") {
+            displayValue = display.textContent;
+        }
+        if(operator != "") {
+            displayValue = operate(operator, num1, Number(displayValue));
+        }
+        
+        formula.textContent = displayValue;
+        
+        operator = e.target.textContent;
+        
+        display.textContent = "";
+        num1 = Number(displayValue);
+    }
+}
