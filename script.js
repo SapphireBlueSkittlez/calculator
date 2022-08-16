@@ -17,13 +17,13 @@ function divide(a, b) {
 function operate(operator, a, b) {
     switch(operator) {
         case '+':
-            return add(a, b);
+            return (Math.round(add(a, b) * 1000) / 1000);
             break;
         case '-':
-            return subtract(a, b);
+            return (Math.round(subtract(a, b) * 1000) / 1000);
             break;
         case '*':
-            return multiply(a, b);
+            return (Math.round(multiply(a, b) * 1000) / 1000);
             break;
         case '/':
             if(b == 0) {
@@ -49,15 +49,20 @@ buttons.forEach((button) => {
 });
 
 function btnClick (e) {
+    //enter number
     if (!(isNaN(Number(e.target.textContent)))) {
         display.textContent += e.target.textContent;
-    } else if (e.target.textContent == 'C'){
+    } 
+    //clear display
+    else if (e.target.textContent == 'C'){
         displayValue = "";
         num1 = 0;
         operator = "";
         display.textContent = "";
         formula.textContent = "";
-    } else if (e.target.textContent == '='){
+    } 
+    //use = sign
+    else if (e.target.textContent == '='){
         if(num1 == undefined || isNaN(num1)) {
             num1 = 0;
         }
@@ -68,7 +73,9 @@ function btnClick (e) {
         operator = "";
         display.textContent = "";
         num1 = Number(displayValue);
-    } else {
+    } 
+    //use operator
+    else {
         if(num1 == undefined || isNaN(num1)) {
             num1 = 0;
         }
@@ -85,5 +92,6 @@ function btnClick (e) {
         
         display.textContent = "";
         num1 = Number(displayValue);
+        displayValue = 0;
     }
 }
