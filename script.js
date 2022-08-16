@@ -75,9 +75,11 @@ function btnClick (e) {
     } 
     //backspace
     else if (e.target.textContent == '<-'){
+        if(display.textContent == "") {
+            return;
+        }
         if(display.textContent.substring(display.textContent.length -1) == '.') {
             hasDecimal = false;
-            console.log(display.textContent.substring(display.textContent.length -2));
         }
         display.textContent = display.textContent.slice(0, -1);
     } 
